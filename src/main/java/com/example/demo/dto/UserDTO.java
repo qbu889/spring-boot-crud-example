@@ -25,7 +25,7 @@ public class UserDTO {
 
     // 手机号格式校验（11位数字，以1开头）
     @Pattern(regexp = "^1[3-9]\\d{9}$",
-            message = "手机号格式不正确（需为11位有效数字）")
+            message = "手机号格式不正确（需为11位有效数字且符合手机开头数字）")
     private String phone;
 
     // 年龄非负校验
