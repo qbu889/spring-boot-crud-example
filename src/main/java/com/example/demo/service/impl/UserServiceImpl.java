@@ -25,9 +25,14 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserDTO createUser(UserDTO userDTO) {
         String username = userDTO.getUsername();
-        boolean exitst = userRepository.findByUsername(username).isPresent();
-        if (exitst) {
-            throw new RuntimeException("已存在该用户"+username);
+        // 检查用户名是否存在
+        if (userRepository.findByUsername(username).isPresent()) {
+            throw new RuntimeException("用户名已存在: " + username);
+        }
+        // 新增：检查邮箱是否存在
+        String email = userDTO.getEmail();
+        if (email != null && userRepository.findByEmail(email).isPresent()) {
+            throw new RuntimeException("邮箱已存在: " + email);
         }
         User user= convertToEntity(userDTO);
         user.setCreatedTime(LocalDateTime.now());
